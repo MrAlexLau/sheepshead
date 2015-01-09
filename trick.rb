@@ -1,0 +1,17 @@
+class Trick
+  attr_accessor :cards_played
+
+  def initialize(table, starting_seat)
+    @table = table
+    @next_seat = starting_seat
+    @cards_played = []
+  end
+
+  def play(num_players)
+    num_players.times do
+      player = @table.player_at_seat(@next_seat)
+      @cards_played << player.play_card(@cards_played)
+      @next_seat += 1
+    end
+  end
+end
