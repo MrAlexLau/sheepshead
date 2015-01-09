@@ -9,10 +9,10 @@ class Game
   def start_game
     dealer.deal(table.players)
     game_status
-    @trick = Trick.new(table, 1)
     @tricks_played = 0
 
     while !game_over?
+      @trick = Trick.new(table, 1)
       @trick.play(table.players.count)
       @tricks_played += 1
     end

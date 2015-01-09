@@ -13,7 +13,7 @@ class Player
       puts "What card would you like to play?"
     end
 
-    hand.first
+    hand.delete(hand.first)
   end
 
   private

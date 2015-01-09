@@ -6,7 +6,7 @@ class Table # as in, table of players
     @players = (1..5).to_a.map do |num|
       player = Player.new
       player.name = "Player #{num}"
-      player.seat_number = 1
+      player.seat_number = num
       player
     end
 
