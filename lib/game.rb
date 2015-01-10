@@ -24,9 +24,9 @@ class Game
 
   # debugging
   def game_status
-    puts 'Here are the hands for each player:'
-    table.players.each { |p| puts p.hand; puts "-----" }
+    # puts 'Here are the hands for each player:'
+    # table.players.each { |p| puts p.hand; puts "-----" }
 
-    puts "blind: #{dealer.blind}"
+    # puts "blind: #{dealer.blind}"
   end
 end
