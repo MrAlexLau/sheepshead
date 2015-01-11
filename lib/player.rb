@@ -1,7 +1,7 @@
 class Player
   include PlayerInput
 
-  attr_accessor :name, :hand, :seat_number, :interactive
+  attr_accessor :name, :hand, :seat_number, :interactive, :tricks_won
   alias_method :interactive?, :interactive
   alias_method :to_s, :name
 

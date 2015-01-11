@@ -15,8 +15,6 @@ class Table # as in, table of players
   end
 
   def player_at_seat(seat_number)
-    # roll around to the first seat if the seat number is more than the number of players
-    seat = (seat_number > @players.count) ? 1 : seat_number
-    @players.find { |player| player.seat_number == seat }
+    @players.find { |player| player.seat_number == seat_number }
   end
 end

@@ -28,13 +28,19 @@ class Trick
       # roll around to the first seat if the seat number is more than the number of players
       @next_seat = 1 if @next_seat > num_players
     end
-
-    puts "--------"
   end
 
   def winner
     spaces_from_starting_seat = @cards_played.index(winning_card)
-    @table.player_at_seat(@starting_seat + spaces_from_starting_seat)
+
+    # example if the starting_seat is 5
+    # and spaces_from_starting_seat is 2
+    # we want the second seat
+    # so we have (5 + 2) mod 5
+    final_seat = @starting_seat + spaces_from_starting_seat
+    final_seat = final_seat % @table.players.count if final_seat > @table.players.count
+
+    @table.player_at_seat(final_seat)
   end
 
   def winning_card
@@ -64,5 +70,9 @@ class Trick
     end
 
     highest
+  end
+
+  def points
+    @cards_played.inject(0) { |sum, card| sum + card.points }
   end
 end

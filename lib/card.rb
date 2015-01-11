@@ -31,6 +31,16 @@ class Card
     "A"
   ]
 
+  # ranked from lowest to highest
+  # based on the value of the card
+  CARD_POINTS = {
+    "J" => 2,
+    "Q" => 3,
+    "K" => 4,
+    "10" => 10,
+    "A" => 11
+  }
+
   def initialize(value, suit)
     @value = value
     @suit = suit
@@ -61,5 +71,9 @@ class Card
 
   def nontrump_value
     NONTRUMP_RANKINGS.index(self.value)
+  end
+
+  def points
+    CARD_POINTS[self.value] || 0
   end
 end
