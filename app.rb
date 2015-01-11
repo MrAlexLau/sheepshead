@@ -14,4 +14,5 @@ require 'braise'
 
 g = Game.new
 
-g.start_game
+starting_seat = 1 # TODO: change this to vary from game to game
+g.start_game(starting_seat)

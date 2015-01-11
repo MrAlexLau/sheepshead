@@ -3,6 +3,7 @@ class Player
 
   attr_accessor :name, :hand, :seat_number, :interactive
   alias_method :interactive?, :interactive
+  alias_method :to_s, :name
 
   def initialize
     @hand = []
@@ -10,6 +11,10 @@ class Player
 
   def play_card(cards_played)
     interactive? ? card_from_user(hand, cards_played) : auto_pick_next_card(cards_played)
+  end
+
+  def name
+    interactive? ? 'You' : @name
   end
 
   private

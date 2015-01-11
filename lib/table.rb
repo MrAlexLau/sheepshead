@@ -11,10 +11,12 @@ class Table # as in, table of players
 
     @players.sample.interactive = true # sets one of the players to interactive mode
 
-    puts "Interactive player: #{@players.find { |player| player.interactive == true }.name}"
+    puts "You are player #{@players.find { |player| player.interactive == true }.seat_number}"
   end
 
   def player_at_seat(seat_number)
-    @players.find { |player| player.seat_number == seat_number }
+    # roll around to the first seat if the seat number is more than the number of players
+    seat = (seat_number > @players.count) ? 1 : seat_number
+    @players.find { |player| player.seat_number == seat }
   end
 end

@@ -6,15 +6,18 @@ class Game
     @table = Table.new
   end
 
-  def start_game
+  def start_game(starting_seat)
     dealer.deal(table.players)
     game_status
     @tricks_played = 0
+    leaders_seat = starting_seat
 
     while !game_over?
-      @trick = Trick.new(table, 1)
+      @trick = Trick.new(table, leaders_seat)
       @trick.play(table.players.count)
       @tricks_played += 1
+      leaders_seat = @trick.winner.seat_number
+      puts "Trick Winner: #{@trick.winner} with #{@trick.winning_card}"
     end
   end
 

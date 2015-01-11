@@ -1,6 +1,36 @@
 class Card
   attr_accessor :value, :suit
 
+  # ranked from lowest to highest
+  # based on the value and suit of the card
+  TRUMP_RANKINGS = [
+    "7D",
+    "8D",
+    "9D",
+    "KD",
+    "10D",
+    "AD",
+    "JD",
+    "JH",
+    "JS",
+    "JC",
+    "QD",
+    "QH",
+    "QS",
+    "QC"
+  ]
+
+  # ranked from lowest to highest
+  # based on the value of the card
+  NONTRUMP_RANKINGS = [
+    "7",
+    "8",
+    "9",
+    "K",
+    "10",
+    "A"
+  ]
+
   def initialize(value, suit)
     @value = value
     @suit = suit
@@ -21,5 +51,15 @@ class Card
   def trump?
     # all queens, jacks, and diamonds are trump
     ['Q', 'J'].include?(@value) || self.suit == 'D'
+  end
+
+  def trump_value
+    return -1 if !trump?
+
+    TRUMP_RANKINGS.index(self.to_s)
+  end
+
+  def nontrump_value
+    NONTRUMP_RANKINGS.index(self.value)
   end
 end
