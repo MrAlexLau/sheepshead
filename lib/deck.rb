@@ -30,4 +30,8 @@ class Deck
   def to_s
     cards.join(', ')
   end
+
+  def blind
+    cards
+  end
 end

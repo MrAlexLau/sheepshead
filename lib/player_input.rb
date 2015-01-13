@@ -4,12 +4,13 @@ module PlayerInput
     hand.each_with_index do |card, i|
       puts "#{i + 1}: #{card}"
     end
-    puts "What card would you like to play?"
   end
 
   # user = an interactive user from the terminal
   def card_from_user(hand, cards_played)
     next_card_prompt(hand)
+
+    puts "What card would you like to play?"
     card = get_card_following_suit(hand, cards_played)
 
     puts "You picked #{card}"
@@ -58,5 +59,28 @@ module PlayerInput
     when 'H'
       'Hearts'
     end
+  end
+
+  def user_picks?(hand)
+    @user_picks ||= begin
+      next_card_prompt(hand)
+      puts "Would you like to pick? (Y for yes)"
+      response = gets
+      response.strip == 'Y'
+    end
+  end
+
+  # prompts the user for which cards to bury
+  # returns the hand after burying
+  def user_bury_prompt(hand, blind_count)
+    next_card_prompt(hand)
+
+    blind_count.times do
+      puts "Which card would you like to bury?"
+      card_number = get_valid_card_number(hand)
+      hand.delete_at(card_number - 1)
+    end
+
+    hand
   end
 end

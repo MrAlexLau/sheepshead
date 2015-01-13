@@ -1,8 +1,9 @@
 class Dealer
-  attr_accessor :deck
+  attr_accessor :deck, :seat_number
 
-  def initialize
+  def initialize(dealer_seat)
     @deck = Deck.new
+    @seat_number = dealer_seat
   end
 
   # deals the entire deck to the players
@@ -18,10 +19,31 @@ class Dealer
   end
 
   def blind
-    deck
+    deck.blind
   end
 
   def deal_player(player)
     player.hand << deck.pull_top_card!
+  end
+
+  # starting with the player to the left of the dealer
+  # see if anyone wants to pick up the blind
+  # returns the picker if he exists, nil otherwise
+  def blind_selection(table)
+    seat = table.adjusted_seat_number(self.seat_number + 1) # start with the player to the left of the dealer
+    table.players.count.times do
+      player = table.player_at_seat(seat)
+      if player.wants_to_pick?
+        player.hand = player.hand + blind
+        @blind = player.bury!(blind.count)
+
+        puts "The blind is #{@blind}"
+        return player
+      end
+
+      seat = table.adjusted_seat_number(seat + 1)
+    end
+
+    nil # nobody picked
   end
 end

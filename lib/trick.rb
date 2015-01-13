@@ -24,23 +24,14 @@ class Trick
       @cards_played << player.play_card(@cards_played)
 
       @next_seat += 1
-
-      # roll around to the first seat if the seat number is more than the number of players
-      @next_seat = 1 if @next_seat > num_players
+      @next_seat = @table.adjusted_seat_number(@next_seat)
     end
   end
 
   def winner
     spaces_from_starting_seat = @cards_played.index(winning_card)
-
-    # example if the starting_seat is 5
-    # and spaces_from_starting_seat is 2
-    # we want the second seat
-    # so we have (5 + 2) mod 5
-    final_seat = @starting_seat + spaces_from_starting_seat
-    final_seat = final_seat % @table.players.count if final_seat > @table.players.count
-
-    @table.player_at_seat(final_seat)
+    seat_number = @table.adjusted_seat_number(@starting_seat + spaces_from_starting_seat)
+    @table.player_at_seat(seat_number)
   end
 
   def winning_card

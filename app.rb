@@ -10,9 +10,11 @@ require 'lib/player.rb'
 require 'lib/game.rb'
 require 'lib/trick.rb'
 require 'lib/table.rb'
+
 require 'braise'
 
-g = Game.new
+num_players = 5 # TODO: make this configurable
+dealer_seat = rand(1..num_players)
+game = Game.new(dealer_seat)
 
-starting_seat = 1 # TODO: change this to vary from game to game
-g.start_game(starting_seat)
+game.start_game
