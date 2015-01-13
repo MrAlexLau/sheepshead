@@ -35,6 +35,7 @@ class Dealer
       player = table.player_at_seat(seat)
       if player.wants_to_pick?
         player.hand = player.hand + blind
+        player.check_for_partner!
         @blind = player.bury!(blind.count)
 
         puts "The blind is #{@blind}"

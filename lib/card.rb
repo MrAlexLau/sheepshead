@@ -41,6 +41,8 @@ class Card
     "A" => 11
   }
 
+  PARTNER_CARD = 'JD'
+
   def initialize(value, suit)
     @value = value
     @suit = suit

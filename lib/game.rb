@@ -27,11 +27,19 @@ class Game
       @tricks_played += 1
 
       leaders_seat = trick.winner.seat_number
-      trick.winner.tricks_won = trick
+      trick.winner.take_trick(trick)
       puts "Cards played this trick: #{trick.cards_played.join(', ')}"
       puts "This trick was worth #{trick.points} points."
       puts "Trick Winner: #{trick.winner} with #{trick.winning_card}"
       puts "----------------------"
+    end
+
+    display_game_results
+  end
+
+  def display_game_results
+    @table.players.each do |player|
+      puts "#{player}: #{player.total_points} points"
     end
   end
 

@@ -1,12 +1,14 @@
 class Player
   include PlayerInput
 
-  attr_accessor :name, :hand, :seat_number, :interactive, :tricks_won
+  attr_accessor :name, :hand, :seat_number, :interactive, :tricks_won, :is_partner, :is_picker
   alias_method :interactive?, :interactive
+  alias_method :is_partner?, :is_partner
   alias_method :to_s, :name
 
   def initialize
     @hand = []
+    @tricks_won = []
   end
 
   def play_card(cards_played)
@@ -41,6 +43,18 @@ class Player
 
     # the new blind is the cards buried
     (hand_before_burying - self.hand)
+  end
+
+  def check_for_partner!
+    self.is_partner = self.hand.find { |card| card.to_s == Card::PARTNER_CARD }.any?
+  end
+
+  def total_points
+    self.tricks_won.any? ? self.tricks_won.inject(0) { |sum, trick| sum + trick.points } : 0
+  end
+
+  def take_trick(trick)
+    @tricks_won << trick
   end
 
   private
