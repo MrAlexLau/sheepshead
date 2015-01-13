@@ -1,5 +1,4 @@
 class Game
-  attr_reader :dealer, :table
 
   def initialize(dealer_seat)
     @dealer = Dealer.new(dealer_seat)
@@ -8,11 +7,12 @@ class Game
   end
 
   def start_game
-    dealer.deal(table.players)
-    @picker = dealer.blind_selection(table)
+    @dealer.deal(@table.players)
+    @picker = @dealer.blind_selection(@table)
+    @table.players.each { |player| player.check_for_partner! }
 
     # start with the person to the left of the dealer
-    leaders_seat = table.adjusted_seat_number(dealer.seat_number + 1)
+    leaders_seat = @table.adjusted_seat_number(@dealer.seat_number + 1)
 
     if self.leaster?
       puts "----------------------"
@@ -22,8 +22,8 @@ class Game
     while !game_over?
       puts "----------------------"
 
-      trick = Trick.new(table, leaders_seat)
-      trick.play(table.players.count)
+      trick = Trick.new(@table, leaders_seat)
+      trick.play(@table.players.count)
       @tricks_played += 1
 
       leaders_seat = trick.winner.seat_number
@@ -38,8 +38,10 @@ class Game
   end
 
   def display_game_results
-    @table.players.each do |player|
-      puts "#{player}: #{player.total_points} points"
+    @table.teams.each do |team, players|
+      _points = players.inject(0) { |sum, player| sum + player.points }
+      players_names = players.map { |player| player.name }.join(", ")
+      puts "#{team} (#{players_names}): #{_points} points"
     end
   end
 
@@ -54,8 +56,13 @@ class Game
   # debugging
   def game_status
     puts 'Here are the hands for each player:'
-    table.players.each { |p| puts p.hand; puts "-----" }
+    @table.players.each do |player|
+      puts player.name
+      puts player.hand
+      puts "is picker: #{player.is_picker}"
+      puts "is partner: #{player.is_partner}"
+    end
 
-    puts "blind: #{dealer.blind}"
+    puts "blind: #{@dealer.blind}"
   end
 end

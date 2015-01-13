@@ -36,4 +36,13 @@ class Table # as in, table of players
 
     _seat
   end
+
+  def teams
+    if @players.count == 5
+      {
+        'Picking Team' => @players.select { |player| player.is_picker? || player.is_partner? },
+        'Other Team' => @players.select { |player| !player.is_picker? && !player.is_partner? }
+      }
+    end
+  end
 end
