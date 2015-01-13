@@ -4,9 +4,11 @@ GEM
     ansi (1.4.3)
     braise (1.0.0)
       ansi
+    rake (10.3.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   braise
+  rake
