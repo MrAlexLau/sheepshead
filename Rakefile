@@ -1,6 +1,5 @@
 #!/usr/bin/env rake
 
-
 task :console do
   require 'irb'
 
