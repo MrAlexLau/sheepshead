@@ -66,7 +66,7 @@ module PlayerInput
       next_card_prompt(hand)
       puts "Would you like to pick? (Y for yes)"
       response = gets
-      response.strip == 'Y'
+      response.strip.upcase == 'Y'
     end
   end
 
