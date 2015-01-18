@@ -34,4 +34,15 @@ FactoryGirl.define do
   factory :trick do
     initialize_with { Trick.new(Table.new, 1) }
   end
+
+  factory :table do
+
+    factory :table_with_5_players do
+      after(:build) do |table|
+        5.times do
+          table.players << build(:player)
+        end
+      end
+    end
+  end
 end
