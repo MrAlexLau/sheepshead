@@ -38,10 +38,19 @@ class Game
   end
 
   def display_game_results
-    @table.teams.each do |team, players|
-      _points = players.inject(0) { |sum, player| sum + player.points }
-      players_names = players.map { |player| player.name }.join(", ")
-      puts "#{team} (#{players_names}): #{_points} points"
+    if self.leaster?
+      @table.players.each do |player|
+        puts "(#{player.name}): #{player.points} points, #{player.tricks_won.count} tricks"
+      end
+
+      leaster_winner = get_leaster_winner
+      puts "#{leaster_winner.name} wins!"
+    else
+      @table.teams.each do |team, players|
+        _points = players.inject(0) { |sum, player| sum + player.points }
+        players_names = players.map { |player| player.name }.join(", ")
+        puts "#{team} (#{players_names}): #{_points} points"
+      end
     end
   end
 
@@ -51,6 +60,13 @@ class Game
 
   def leaster?
     !@picker
+  end
+
+  # TODO: add a check for ties
+  def get_leaster_winner
+    @table.players.inject(@table.players.first) do |winner, player|
+      (player.points <= winner.points && player.tricks_won.any?) ? player : winner
+    end
   end
 
   # debugging
