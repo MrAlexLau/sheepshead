@@ -1,8 +1,8 @@
 class Dealer
   attr_accessor :deck, :seat_number
 
-  def initialize(dealer_seat)
-    @deck = Deck.new
+  def initialize(dealer_seat, number_of_players)
+    @deck = Deck.new(number_of_players)
     @seat_number = dealer_seat
   end
 

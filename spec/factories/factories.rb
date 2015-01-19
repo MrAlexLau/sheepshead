@@ -4,7 +4,6 @@ FactoryGirl.define do
     suit "D"
 
     initialize_with { Card.new(value, suit) }
-
   end
 
   factory :player do

@@ -1,17 +1,10 @@
 class Deck
   attr_accessor :cards
 
-  def initialize
+  def initialize(number_of_players)
     @cards = []
-    values = ['7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-    suits = ['C', 'S', 'H', 'D'] # clubs, spades, hearts, diamonds
-    # suits = ['♧', '♡', '♤', '♢']
-
-    values.each do |value|
-      suits.each do |suit|
-        @cards << Card.new(value, suit)
-      end
-    end
+    @number_of_players = number_of_players
+    load_cards
   end
 
   def shuffle
@@ -19,7 +12,7 @@ class Deck
   end
 
   def blind_reached?
-    (cards.count <= 2) # needs to be updated based on the number of players
+    (cards.count <= blind_count(@number_of_players))
   end
 
   # adding a bang since this modifies the deck
@@ -33,5 +26,36 @@ class Deck
 
   def blind
     cards
+  end
+
+  private
+
+  def blind_count(num_players)
+    case num_players
+    when 3
+      return 4
+    when 4
+      return 3
+    when 5
+      return 2
+    else
+      raise 'Invalid number of players!'
+    end
+  end
+
+  def load_cards
+    Card::VALUES.each do |value|
+      Card::SUITS.values.each do |suit|
+        @cards << Card.new(value, suit) unless should_be_skipped?(value, suit)
+      end
+    end
+  end
+
+  # only skip adding a card if the game is in 3 player mode
+  # and the card is a black seven
+  def should_be_skipped?(value, suit)
+    return false unless @number_of_players == 3
+
+    (value == '7' && suit == Card::SUITS[:clubs]) || (value == '7' && suit == Card::SUITS[:spades])
   end
 end

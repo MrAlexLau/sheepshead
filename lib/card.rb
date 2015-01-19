@@ -1,6 +1,15 @@
 class Card
   attr_accessor :value, :suit
 
+  SUITS = {
+    clubs: 'C',
+    spades: 'S',
+    hearts: 'H',
+    diamonds: 'D'
+  }
+
+  VALUES = ['7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+
   # ranked from lowest to highest
   # based on the value and suit of the card
   TRUMP_RANKINGS = [

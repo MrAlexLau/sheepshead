@@ -1,7 +1,7 @@
 class Game
-
-  def initialize(dealer_seat)
-    @dealer = Dealer.new(dealer_seat)
+  def initialize(options, dealer_seat)
+    @options = options
+    @dealer = Dealer.new(dealer_seat, options.number_of_players)
     @table = Table.new
     @tricks_played = 0
   end

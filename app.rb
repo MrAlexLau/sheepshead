@@ -12,13 +12,20 @@ require 'lib/trick.rb'
 require 'lib/table.rb'
 
 require 'braise'
+require 'ostruct'
 
-num_players = 5 # TODO: make this configurable
-dealer_seat = rand(1..num_players)
+
+options = OpenStruct.new(
+  number_of_players: 5,
+  points_to_win: 50
+)
+
+dealer_seat = rand(1..options.number_of_players)
+
 
 continue = true
 while continue
-  game = Game.new(dealer_seat)
+  game = Game.new(options, dealer_seat)
   game.start_game
 
   puts "Do you want to play another game?"
