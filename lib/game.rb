@@ -1,15 +1,15 @@
 class Game
-  def initialize(options, dealer_seat)
+  def initialize(options, table, dealer_seat)
     @options = options
     @dealer = Dealer.new(dealer_seat, options.number_of_players)
-    @table = Table.new(options.number_of_players)
+    @table = table
     @tricks_played = 0
   end
 
   def start_game
-    @dealer.deal(@table.players)
+    @dealer.deal(players)
     @picker = @dealer.blind_selection(@table)
-    @table.players.each { |player| player.check_for_partner! }
+    players.each { |player| player.check_for_partner! }
 
     # start with the person to the left of the dealer
     leaders_seat = @table.adjusted_seat_number(@dealer.seat_number + 1)
@@ -23,7 +23,7 @@ class Game
       puts "----------------------"
 
       trick = Trick.new(@table, leaders_seat)
-      trick.play(@table.players.count)
+      trick.play(players.count)
       @tricks_played += 1
 
       leaders_seat = trick.winner.seat_number
@@ -39,12 +39,12 @@ class Game
 
   def display_game_results
     if self.leaster?
-      @table.players.each do |player|
+      players.each do |player|
         puts "(#{player.name}): #{player.points} points, #{player.tricks_won.count} tricks"
       end
       puts "#{leaster_winner.name} wins!"
     else
-      @table.teams.each do |team, players|
+      teams.each do |team, players|
         _points = players.inject(0) { |sum, player| sum + player.points }
         players_names = players.map { |player| player.name }.join(", ")
         puts "#{team} (#{players_names}): #{_points} points"
@@ -71,22 +71,40 @@ class Game
 
   # TODO: add a check for ties
   def leaster_winner
-    @table.players.inject(@table.players.first) do |winner, player|
+    players.inject(players.first) do |winner, player|
       (player.points <= winner.points && player.tricks_won.any?) ? player : winner
     end
   end
 
   # TODO: add a check for ties
   def normal_game_winner
-    @table.players.inject(@table.players.first) do |winner, player|
+    players.inject(players.first) do |winner, player|
       (player.points >= winner.points) ? player : winner
     end
+  end
+
+  def teams
+    if players.count == 5
+      {
+        'Picking Team' => players.select { |player| player.is_picker? || player.is_partner? },
+        'Other Team' => players.select { |player| !player.is_picker? && !player.is_partner? }
+      }
+    else
+      {
+        'Picking Team' => players.select { |player| player.is_picker? },
+        'Other Team' => players.select { |player| !player.is_picker? }
+      }
+    end
+  end
+
+  def players
+    @table.players
   end
 
   # debugging
   def game_status
     puts 'Here are the hands for each player:'
-    @table.players.each do |player|
+    players.each do |player|
       puts player.name
       puts player.hand
       puts "is picker: #{player.is_picker}"

@@ -31,13 +31,15 @@ end
 
 dealer_seat = rand(1..options.number_of_players)
 
+table = Table.new(options.number_of_players)
+
 continue = true
 while continue
-  game = Game.new(options, dealer_seat)
+  game = Game.new(options, table, dealer_seat)
   game.start_game
 
   puts "Do you want to play another game?"
-  continue = (gets.strip.upcase == 'Y')
+  continue = agrees?(user_response_uppercase)
 end
 
 puts "Game over."

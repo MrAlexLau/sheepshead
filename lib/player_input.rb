@@ -64,9 +64,8 @@ module PlayerInput
   def user_picks?(hand)
     @user_picks ||= begin
       next_card_prompt(hand)
-      puts "Would you like to pick? (Y for yes)"
-      response = gets
-      response.strip.upcase == 'Y'
+      puts "Would you like to pick? #{yes_instructions}"
+      agrees?(user_response_uppercase)
     end
   end
 
