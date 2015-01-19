@@ -33,9 +33,9 @@ class Deck
   def blind_count(num_players)
     case num_players
     when 3
-      return 4
-    when 4
       return 3
+    when 4
+      return 4
     when 5
       return 2
     else
