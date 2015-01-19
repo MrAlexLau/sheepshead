@@ -1,4 +1,5 @@
 describe Table do
+  let(:subject) { build(:table)}
   before do
     # turn off interactive mode for testing
     subject.players.each do |player|

@@ -31,7 +31,7 @@ FactoryGirl.define do
   end
 
   factory :trick do
-    initialize_with { Trick.new(Table.new, 1) }
+    initialize_with { Trick.new(Table.new(5), 1) }
   end
 
   factory :table do
@@ -42,5 +42,7 @@ FactoryGirl.define do
         end
       end
     end
+
+    initialize_with { Table.new(5) }
   end
 end

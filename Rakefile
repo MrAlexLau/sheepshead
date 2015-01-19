@@ -4,6 +4,9 @@ task :console do
   require 'irb'
 
   $LOAD_PATH << '.'
+  require 'lib/io/user_input.rb'
+  require 'lib/io/options_input.rb'
+  require 'lib/options.rb'
   require 'lib/dealer.rb'
   require 'lib/card.rb'
   require 'lib/deck.rb'
@@ -13,9 +16,6 @@ task :console do
   require 'lib/game.rb'
   require 'lib/trick.rb'
   require 'lib/table.rb'
-
-  require 'braise'
-  require 'ostruct'
 
   ARGV.clear
   IRB.start

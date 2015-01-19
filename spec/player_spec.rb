@@ -56,9 +56,36 @@ describe Player do
   end
 
   describe "#points" do
+    context "when the player has buried points" do
+      let(:buried_cards) {
+        [ build(:card, value: '10', suit: 'H'), # 10 points
+          build(:card, value: 'J', suit: 'H') ] # 2 points
+      }
+      it "includes the points in the score" do
+        allow(subject).to receive(:blind).and_return(buried_cards)
+        expect(subject.points).to eq(12)
+      end
+
+      context "and the player has taken tricks" do
+        it "returns the sum of the blind and the tricks" do
+          trick_1 = build(:trick, cards_played:
+            [build(:card, value: 'J', suit: 'H'), # 2 points
+            build(:card, value: 'Q', suit: 'C'), # 3 points
+            build(:card, value: 'J', suit: 'D')] # 2 points
+          )
+
+        allow(subject).to receive(:blind).and_return(buried_cards) # 12 points
+        subject.take_trick(trick_1)
+        expect(subject.points).to eq(19)
+        end
+      end
+    end
+
     context "when the player hasn't taken any tricks" do
-      it "returns 0" do
-        expect(subject.points).to eq(0)
+      context "and the player hasn't buried any points" do
+        it "returns 0" do
+          expect(subject.points).to eq(0)
+        end
       end
     end
 

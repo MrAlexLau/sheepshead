@@ -7,9 +7,12 @@ class Player
   alias_method :is_picker?, :is_picker
   alias_method :to_s, :name
 
+  attr_reader :blind
+
   def initialize
     @hand = []
     @tricks_won = []
+    @blind = []
   end
 
   def play_card(cards_played)
@@ -42,7 +45,7 @@ class Player
     end
 
     # the new blind is the cards buried
-    (hand_before_burying - self.hand)
+    @blind = (hand_before_burying - self.hand)
   end
 
   def check_for_partner!
@@ -50,7 +53,11 @@ class Player
   end
 
   def points
-    self.tricks_won.any? ? self.tricks_won.inject(0) { |sum, trick| sum + trick.points } : 0
+    total = 0
+    total += self.tricks_won.inject(0) { |sum, trick| sum + trick.points }
+    total += blind.inject(0) { |sum, card| sum + card.points }
+
+    total
   end
 
   def take_trick(trick)
