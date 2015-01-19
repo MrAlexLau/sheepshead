@@ -1,8 +1,8 @@
 class Game
-
-  def initialize(dealer_seat)
-    @dealer = Dealer.new(dealer_seat)
-    @table = Table.new
+  def initialize(options, dealer_seat)
+    @options = options
+    @dealer = Dealer.new(dealer_seat, options.number_of_players)
+    @table = Table.new(options.number_of_players)
     @tricks_played = 0
   end
 
@@ -42,8 +42,6 @@ class Game
       @table.players.each do |player|
         puts "(#{player.name}): #{player.points} points, #{player.tricks_won.count} tricks"
       end
-
-      leaster_winner = get_leaster_winner
       puts "#{leaster_winner.name} wins!"
     else
       @table.teams.each do |team, players|
@@ -55,7 +53,16 @@ class Game
   end
 
   def game_over?
-    @tricks_played >= 6 # needs to be updated for when the game isn't 5 handed
+    case @options.number_of_players
+    when 3
+      @tricks_played >= 9
+    when 4
+      @tricks_played >= 7
+    when 5
+      @tricks_played >= 6
+    else
+      raise 'Invalid number of players'
+    end
   end
 
   def leaster?
@@ -63,9 +70,16 @@ class Game
   end
 
   # TODO: add a check for ties
-  def get_leaster_winner
+  def leaster_winner
     @table.players.inject(@table.players.first) do |winner, player|
       (player.points <= winner.points && player.tricks_won.any?) ? player : winner
+    end
+  end
+
+  # TODO: add a check for ties
+  def normal_game_winner
+    @table.players.inject(@table.players.first) do |winner, player|
+      (player.points >= winner.points) ? player : winner
     end
   end
 

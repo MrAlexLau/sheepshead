@@ -15,6 +15,7 @@ task :console do
   require 'lib/table.rb'
 
   require 'braise'
+  require 'ostruct'
 
   ARGV.clear
   IRB.start

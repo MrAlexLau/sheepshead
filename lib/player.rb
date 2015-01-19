@@ -39,7 +39,6 @@ class Player
     else
       # TODO: add logic for AI burying
       self.hand = hand_before_burying
-      false
     end
 
     # the new blind is the cards buried

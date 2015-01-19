@@ -73,9 +73,8 @@ module PlayerInput
   # prompts the user for which cards to bury
   # returns the hand after burying
   def user_bury_prompt(hand, blind_count)
-    next_card_prompt(hand)
-
     blind_count.times do
+      next_card_prompt(hand)
       puts "Which card would you like to bury?"
       card_number = get_valid_card_number(hand)
       hand.delete_at(card_number - 1)

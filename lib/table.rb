@@ -1,8 +1,8 @@
 class Table # as in, table of players
   attr_accessor :players
 
-  def initialize
-    @players = (1..5).to_a.map do |num| # TODO: adjust for different numbers of players
+  def initialize(num_players)
+    @players = (1..num_players).to_a.map do |num|
       player = Player.new
       player.name = "Player #{num}"
       player.seat_number = num
@@ -45,6 +45,11 @@ class Table # as in, table of players
       {
         'Picking Team' => @players.select { |player| player.is_picker? || player.is_partner? },
         'Other Team' => @players.select { |player| !player.is_picker? && !player.is_partner? }
+      }
+    else
+      {
+        'Picking Team' => @players.select { |player| player.is_picker? },
+        'Other Team' => @players.select { |player| !player.is_picker? }
       }
     end
   end
