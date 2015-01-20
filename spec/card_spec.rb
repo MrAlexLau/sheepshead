@@ -1,5 +1,4 @@
 # card_spec.rb
-require 'card'
 
 describe Card do
   let(:all_suits) { ['C', 'S', 'H', 'D'] }

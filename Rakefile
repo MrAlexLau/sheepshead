@@ -4,18 +4,9 @@ task :console do
   require 'irb'
 
   $LOAD_PATH << '.'
-  require 'lib/io/user_input.rb'
-  require 'lib/io/options_input.rb'
-  require 'lib/options.rb'
-  require 'lib/dealer.rb'
-  require 'lib/card.rb'
-  require 'lib/deck.rb'
-  require 'lib/rule_master.rb'
-  require 'lib/player_input.rb'
-  require 'lib/player.rb'
-  require 'lib/game.rb'
-  require 'lib/trick.rb'
-  require 'lib/table.rb'
+  Dir["lib/*.rb"].each { |f| require f }
+  Dir["lib/io/*.rb"].each { |f| require f }
+  Dir["lib/models/*.rb"].each { |f| require f }
 
   ARGV.clear
   IRB.start
