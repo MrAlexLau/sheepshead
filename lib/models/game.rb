@@ -6,7 +6,7 @@ class Game
     @tricks_played = 0
   end
 
-  def start_game
+  def play
     @dealer.deal(players)
     @picker = @dealer.blind_selection(@table)
     players.each { |player| player.check_for_partner! }
@@ -35,6 +35,18 @@ class Game
     end
 
     display_game_results
+
+    calculate_results
+    clear_player_hands
+  end
+
+  def results
+    _results = {}
+    @table.players.each do |player|
+      _results[player.name] = 5
+    end
+
+    _results
   end
 
   def display_game_results
@@ -112,5 +124,18 @@ class Game
     end
 
     puts "blind: #{@dealer.blind}"
+  end
+
+
+  def calculate_results
+    # TODO: implement this
+  end
+
+  def clear_player_hands
+    players.each do |player|
+      player.hand = []
+      player.tricks_won = []
+      player.blind = []
+    end
   end
 end

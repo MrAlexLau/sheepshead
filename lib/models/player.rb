@@ -1,13 +1,11 @@
 class Player
   include PlayerInput
 
-  attr_accessor :name, :hand, :seat_number, :interactive, :tricks_won, :is_partner, :is_picker
+  attr_accessor :name, :hand, :seat_number, :interactive, :tricks_won, :is_partner, :is_picker, :blind
   alias_method :interactive?, :interactive
   alias_method :is_partner?, :is_partner
   alias_method :is_picker?, :is_picker
   alias_method :to_s, :name
-
-  attr_reader :blind
 
   def initialize
     @hand = []

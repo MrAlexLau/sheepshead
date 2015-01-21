@@ -22,17 +22,9 @@ if !agrees?(user_response_uppercase)
   options.points_to_win = points_to_win_prompt
 end
 
-dealer_seat = rand(1..options.number_of_players)
 
 table = Table.new(options.number_of_players)
-
-continue = true
-while continue
-  game = Game.new(options, table, dealer_seat)
-  game.start_game
-
-  puts "Do you want to play another game?"
-  continue = agrees?(user_response_uppercase)
-end
+match = Match.new(table, options)
+match.start
 
 puts "Game over."
