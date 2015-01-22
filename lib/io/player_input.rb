@@ -50,13 +50,13 @@ module PlayerInput
     lead_suit = cards_played.first.leading_suit
 
     case lead_suit
-    when 'T'
+    when Card::TRUMP_SUIT
       'Trump'
-    when 'S'
+    when Card::SUITS[:spades]
       'Spades'
-    when 'C'
+    when Card::SUITS[:clubs]
       'Clubs'
-    when 'H'
+    when Card::SUITS[:hearts]
       'Hearts'
     end
   end

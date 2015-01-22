@@ -8,6 +8,8 @@ class Card
     diamonds: 'D'
   }
 
+  TRUMP_SUIT = 'T'
+
   VALUES = ['7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 
   # ranked from lowest to highest
@@ -66,7 +68,7 @@ class Card
   # for example, the queen of spades has the suit spade,
   # but is considered trump when leading a trick
   def leading_suit
-    self.trump? ? 'T' : self.suit
+    self.trump? ? TRUMP_SUIT : self.suit
   end
 
   def trump?

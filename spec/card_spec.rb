@@ -27,14 +27,14 @@ describe Card do
       context "and the suit is diamonds" do
         it "returns T for trump" do
           card = build(:card, value: '7', suit: 'D')
-          expect(card.leading_suit).to eq('T')
+          expect(card.leading_suit).to eq(Card::TRUMP_SUIT)
         end
       end
 
       context "and the suit is not diamonds" do
         it "returns T for trump" do
           card = build(:card, value: 'Q', suit: 'S')
-          expect(card.leading_suit).to eq('T')
+          expect(card.leading_suit).to eq(Card::TRUMP_SUIT)
         end
       end
     end

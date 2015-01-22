@@ -16,6 +16,8 @@ class Dealer
       deal_player(players[player_index % num_players])
       player_index += 1
     end
+
+    players.each { |player| player.check_for_partner! }
   end
 
   def blind
