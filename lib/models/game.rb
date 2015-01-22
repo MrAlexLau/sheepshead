@@ -1,7 +1,7 @@
 class Game
   def initialize(options, table, dealer_seat)
     @options = options
-    @dealer = Dealer.new(dealer_seat, options.number_of_players)
+    @dealer = Dealer.new(dealer_seat, @options.number_of_players)
     @table = table
     @tricks_played = 0
   end
@@ -9,7 +9,6 @@ class Game
   def play
     @dealer.deal(players)
     @picker = @dealer.blind_selection(@table)
-    players.each { |player| player.check_for_partner! }
 
     # start with the person to the left of the dealer
     leaders_seat = @table.adjusted_seat_number(@dealer.seat_number + 1)
@@ -34,20 +33,32 @@ class Game
       puts "----------------------"
     end
 
+    calculate_results
     display_game_results
 
-    calculate_results
-    clear_player_hands
+    clear_player_hands!
+  end
+
+  def calculate_results
+    @results = {}
+
+    if self.leaster?
+      score_keeper = LeasterScoreCalculator.new(players)
+      @table.players.each do |player|
+        @results[player.name] = score_keeper.score_for(player)
+      end
+    else
+      # TODO: calculate normal game scores
+    end
+
+    @results
   end
 
   def results
-    _results = {}
-    @table.players.each do |player|
-      _results[player.name] = 5
-    end
-
-    _results
+    @results
   end
+
+
 
   def display_game_results
     if self.leaster?
@@ -126,12 +137,7 @@ class Game
     puts "blind: #{@dealer.blind}"
   end
 
-
-  def calculate_results
-    # TODO: implement this
-  end
-
-  def clear_player_hands
+  def clear_player_hands!
     players.each do |player|
       player.hand = []
       player.tricks_won = []
