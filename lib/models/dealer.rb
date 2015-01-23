@@ -17,7 +17,7 @@ class Dealer
       player_index += 1
     end
 
-    players.each { |player| player.check_for_partner! }
+    players.each { |player| player.check_for_partner! } if players.count == 5
   end
 
   def blind
@@ -38,7 +38,7 @@ class Dealer
       if player.wants_to_pick?
         player.is_picker = true
         player.hand = player.hand + blind
-        player.check_for_partner!
+        player.check_for_partner! if table.players.count == 5
         @blind = player.bury!(blind.count)
 
         puts "The blind is #{@blind}"

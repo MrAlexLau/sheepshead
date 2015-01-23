@@ -2,6 +2,7 @@
 
 task :console do
   require 'irb'
+  require 'braise'
 
   $LOAD_PATH << '.'
   Dir["lib/*.rb"].each { |f| require f }

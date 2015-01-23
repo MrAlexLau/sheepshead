@@ -13,6 +13,15 @@ class Player
     @blind = []
   end
 
+  # resets all game-related information
+  def reset!
+    self.hand = []
+    self.tricks_won = []
+    self.blind = []
+    self.is_partner = false
+    self.is_picker = false
+  end
+
   def play_card(cards_played)
     interactive? ? card_from_user(hand, cards_played) : auto_pick_next_card(cards_played)
   end

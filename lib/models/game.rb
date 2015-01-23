@@ -36,7 +36,7 @@ class Game
     calculate_results
     display_game_results
 
-    clear_player_hands!
+    reset_players!
   end
 
   def calculate_results
@@ -44,11 +44,12 @@ class Game
 
     if self.leaster?
       score_keeper = LeasterScoreCalculator.new(players)
-      @table.players.each do |player|
-        @results[player.name] = score_keeper.score_for(player)
-      end
     else
-      # TODO: calculate normal game scores
+      score_keeper = ScoreCalculator.new(players)
+    end
+
+    @table.players.each do |player|
+      @results[player.name] = score_keeper.score_for(player)
     end
 
     @results
@@ -124,24 +125,9 @@ class Game
     @table.players
   end
 
-  # debugging
-  def game_status
-    puts 'Here are the hands for each player:'
+  def reset_players!
     players.each do |player|
-      puts player.name
-      puts player.hand
-      puts "is picker: #{player.is_picker}"
-      puts "is partner: #{player.is_partner}"
-    end
-
-    puts "blind: #{@dealer.blind}"
-  end
-
-  def clear_player_hands!
-    players.each do |player|
-      player.hand = []
-      player.tricks_won = []
-      player.blind = []
+      player.reset!
     end
   end
 end
