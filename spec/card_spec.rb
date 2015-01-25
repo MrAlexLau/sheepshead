@@ -1,5 +1,3 @@
-# card_spec.rb
-
 describe Card do
   let(:all_suits) { ['C', 'S', 'H', 'D'] }
 
@@ -273,6 +271,35 @@ describe Card do
             expect(card.points).to eq(0)
           end
         end
+      end
+    end
+  end
+
+  describe "#==" do
+    context "when two cards have the same suit and value" do
+      it "returns true" do
+        card_1 = build(:card, value: 'Q', suit: 'D')
+        card_2 = build(:card, value: 'Q', suit: 'D')
+
+        expect(card_1 == card_2).to eq(true)
+      end
+    end
+
+    context "when two cards have different values" do
+      it "returns false" do
+        card_1 = build(:card, value: '7', suit: 'D')
+        card_2 = build(:card, value: 'Q', suit: 'D')
+
+        expect(card_1 == card_2).to eq(false)
+      end
+    end
+
+    context "when two cards have different suits" do
+      it "returns false" do
+        card_1 = build(:card, value: '7', suit: 'D')
+        card_2 = build(:card, value: '7', suit: 'S')
+
+        expect(card_1 == card_2).to eq(false)
       end
     end
   end

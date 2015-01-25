@@ -1,9 +1,11 @@
 class Deck
   attr_accessor :cards
+  attr_reader :blind
 
   def initialize(number_of_players)
     @cards = []
     @number_of_players = number_of_players
+    @blind = []
     load_cards
   end
 
@@ -24,8 +26,9 @@ class Deck
     cards.join(', ')
   end
 
-  def blind
-    cards
+  def deal_blind
+    @blind = @cards.sample(blind_count(@number_of_players))
+    @cards = @cards - @blind
   end
 
   private

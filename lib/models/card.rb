@@ -89,4 +89,8 @@ class Card
   def points
     CARD_POINTS[self.value] || 0
   end
+
+  def ==(another_card)
+    (self.value == another_card.value && self.suit == another_card.suit)
+  end
 end

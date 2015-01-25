@@ -10,6 +10,7 @@ class Dealer
   def deal(players)
     num_players = players.count
     deck.shuffle
+    deck.deal_blind
 
     player_index = 0
     while !deck.blind_reached?
