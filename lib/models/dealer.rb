@@ -13,7 +13,7 @@ class Dealer
     deck.deal_blind
 
     player_index = 0
-    while !deck.blind_reached?
+    while deck.cards.any?
       deal_player(players[player_index % num_players])
       player_index += 1
     end
@@ -36,6 +36,8 @@ class Dealer
     seat = table.adjusted_seat_number(self.seat_number + 1) # start with the player to the left of the dealer
     table.players.count.times do
       player = table.player_at_seat(seat)
+
+      craise seat if !player
       if player.wants_to_pick?
         player.is_picker = true
         player.hand = player.hand + blind

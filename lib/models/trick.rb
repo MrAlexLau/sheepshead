@@ -43,7 +43,7 @@ class Trick
   end
 
   def trump_present?(cards)
-    cards.find { |card| card.trump? }
+    !!cards.find { |card| card.trump? }
   end
 
   def highest_trump_card(cards)
@@ -55,9 +55,9 @@ class Trick
   end
 
   def highest_nontrump_card(cards)
-    suit_lead = cards_played.first.leading_suit
+    suit_lead = cards.first.leading_suit
     highest = cards.inject(cards.first) do |leader, current_card|
-      (leader.nontrump_value > current_card.nontrump_value && leader.suit == suit_lead) ? leader : current_card
+      (current_card.nontrump_value > leader.nontrump_value && current_card.suit == suit_lead) ? current_card : leader
     end
 
     highest

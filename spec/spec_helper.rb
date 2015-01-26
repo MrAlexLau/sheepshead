@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'factory_girl'
+require 'braise'
 
 ENV["RAILS_ENV"] ||= 'test'
 
