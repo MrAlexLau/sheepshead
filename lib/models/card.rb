@@ -91,6 +91,10 @@ class Card
   end
 
   def ==(another_card)
-    (self.value == another_card.value && self.suit == another_card.suit)
+    if another_card.class == Card
+      (self.value == another_card.value && self.suit == another_card.suit)
+    elsif another_card.class == String
+      (another_card == self.to_s)
+    end
   end
 end

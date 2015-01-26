@@ -276,30 +276,66 @@ describe Card do
   end
 
   describe "#==" do
-    context "when two cards have the same suit and value" do
-      it "returns true" do
-        card_1 = build(:card, value: 'Q', suit: 'D')
-        card_2 = build(:card, value: 'Q', suit: 'D')
+    context "when the object being compared is another Card" do
+      context "when two cards have the same suit and value" do
+        it "returns true" do
+          card_1 = build(:card, value: 'Q', suit: 'D')
+          card_2 = build(:card, value: 'Q', suit: 'D')
 
-        expect(card_1 == card_2).to eq(true)
+          expect(card_1 == card_2).to eq(true)
+        end
+      end
+
+      context "when two cards have different values" do
+        it "returns false" do
+          card_1 = build(:card, value: '7', suit: 'D')
+          card_2 = build(:card, value: 'Q', suit: 'D')
+
+          expect(card_1 == card_2).to eq(false)
+        end
+      end
+
+      context "when two cards have different suits" do
+        it "returns false" do
+          card_1 = build(:card, value: '7', suit: 'D')
+          card_2 = build(:card, value: '7', suit: 'S')
+
+          expect(card_1 == card_2).to eq(false)
+        end
       end
     end
 
-    context "when two cards have different values" do
-      it "returns false" do
-        card_1 = build(:card, value: '7', suit: 'D')
-        card_2 = build(:card, value: 'Q', suit: 'D')
-
-        expect(card_1 == card_2).to eq(false)
+    context "when the object being compared is a string" do
+      context "when the string is in the format value/suit (eg- QS)" do
+        it "returns true" do
+          card = build(:card, value: 'Q', suit: 'D')
+          expect(card == 'QD').to eq(true)
+        end
       end
-    end
 
-    context "when two cards have different suits" do
-      it "returns false" do
-        card_1 = build(:card, value: '7', suit: 'D')
-        card_2 = build(:card, value: '7', suit: 'S')
+      context "when the string has a different value" do
+        it "returns false" do
+          card = build(:card, value: '7', suit: 'D')
+          expect(card == '8D').to eq(false)
+        end
+      end
 
-        expect(card_1 == card_2).to eq(false)
+      context "when the string has a different suit" do
+        it "returns false" do
+          card = build(:card, value: '7', suit: 'D')
+
+          expect(card == '7H').to eq(false)
+        end
+      end
+
+      context "when the string is not 2 characters" do
+        it "returns false" do
+          card = build(:card, value: '7', suit: 'H')
+          expect(card == '7').to eq(false)
+
+          card = build(:card, value: '7', suit: 'H')
+          expect(card == '7HZ').to eq(false)
+        end
       end
     end
   end
