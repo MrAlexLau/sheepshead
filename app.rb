@@ -25,6 +25,7 @@ end
 
 
 table = Table.new(options.number_of_players)
+table.set_interactive_player
 match = Match.new(table, options)
 match.start
 

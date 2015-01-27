@@ -99,13 +99,6 @@ class Game
     end
   end
 
-  # TODO: add a check for ties
-  def normal_game_winner
-    players.inject(players.first) do |winner, player|
-      (player.points >= winner.points) ? player : winner
-    end
-  end
-
   def teams
     if players.count == 5
       {

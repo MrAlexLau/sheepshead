@@ -8,7 +8,9 @@ class Table # as in, table of players
       player.seat_number = num
       player
     end
+  end
 
+  def set_interactive_player
     @players.sample.interactive = true # sets one of the players to interactive mode
 
     puts "You are player #{@players.find { |player| player.interactive == true }.seat_number}"

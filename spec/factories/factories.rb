@@ -29,19 +29,28 @@ FactoryGirl.define do
       interactive true
     end
 
-    # factory :leaster_winner do
-    #   after(:build) do |player|
-    #     player.hand = []
-    #     player.hand << build(:card, value: 'K', suit: 'D')
-    #   end
-    # end
+    factory :leaster_winner do
+      after(:build) do |player|
+        player.hand = []
+        trick = build(:trick)
+        trick.cards_played = [build(:card, value: 'K', suit: 'D')]
+        player.tricks_won = [trick]
+      end
+    end
 
-    # factory :leaster_loser do
-    #   after(:build) do |player|
-    #     player.hand = []
-    #     player.hand << build(:card, value: '10', suit: 'D')
-    #   end
-    # end
+    factory :leaster_loser do
+      after(:build) do |player|
+        trick = build(:trick)
+        trick.cards_played = [build(:card, value: '10', suit: 'D')]
+        player.tricks_won = [trick]
+      end
+    end
+
+    factory :leaster_no_trick do
+      after(:build) do |player|
+        player.tricks_won = []
+      end
+    end
   end
 
   factory :trick do

@@ -3,6 +3,7 @@ class Trick
 
   def initialize
     @cards_played = []
+    @starting_seat = 1
   end
 
   def play(table)

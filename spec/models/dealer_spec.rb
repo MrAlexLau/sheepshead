@@ -6,12 +6,6 @@ describe Dealer do
       context "when there are #{num_players} players" do
         let(:table) { Table.new(num_players) }
         it 'should give each player the same number of cards' do
-          # players = []
-
-          # num_players.times do
-          #   players << build(:player)
-          # end
-
           dealer = Dealer.new(1, num_players)
           dealer.deal(table)
 

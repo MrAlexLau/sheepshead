@@ -13,7 +13,7 @@ class LeasterScoreCalculator
 
   private
 
-  # return the max possible score for a leaster
+  # return the max possible winner score for a leaster
   # most of the time one player will win
   # but this number is needed in case of ties
   def total_score
