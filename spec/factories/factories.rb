@@ -28,10 +28,24 @@ FactoryGirl.define do
     factory :interactive_player do
       interactive true
     end
+
+    # factory :leaster_winner do
+    #   after(:build) do |player|
+    #     player.hand = []
+    #     player.hand << build(:card, value: 'K', suit: 'D')
+    #   end
+    # end
+
+    # factory :leaster_loser do
+    #   after(:build) do |player|
+    #     player.hand = []
+    #     player.hand << build(:card, value: '10', suit: 'D')
+    #   end
+    # end
   end
 
   factory :trick do
-    initialize_with { Trick.new(Table.new(5), 1) }
+    starting_seat 1
   end
 
   factory :table do

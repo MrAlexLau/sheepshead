@@ -1,15 +1,15 @@
 class Trick
-  attr_accessor :cards_played
+  attr_accessor :cards_played, :starting_seat
 
-  def initialize(table, starting_seat)
-    @table = table
-    @next_seat = @starting_seat = starting_seat
+  def initialize
     @cards_played = []
   end
 
-  def play(num_players)
-    (num_players).times do
-      player = @table.player_at_seat(@next_seat)
+  def play(table)
+    next_seat = self.starting_seat
+
+    (table.players.count).times do
+      player = table.player_at_seat(next_seat)
 
       if !@cards_played.empty?
         puts "Cards played this trick: #{@cards_played.join(', ')}"
@@ -23,15 +23,15 @@ class Trick
 
       @cards_played << player.play_card(@cards_played)
 
-      @next_seat += 1
-      @next_seat = @table.adjusted_seat_number(@next_seat)
+      next_seat += 1
+      next_seat = table.adjusted_seat_number(next_seat)
     end
   end
 
-  def winner
+  def winner(table)
     spaces_from_starting_seat = @cards_played.index(winning_card)
-    seat_number = @table.adjusted_seat_number(@starting_seat + spaces_from_starting_seat)
-    @table.player_at_seat(seat_number)
+    seat_number = table.adjusted_seat_number(self.starting_seat + spaces_from_starting_seat)
+    table.player_at_seat(seat_number)
   end
 
   def winning_card

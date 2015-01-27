@@ -21,15 +21,16 @@ class Game
     while !game_over?
       puts "----------------------"
 
-      trick = Trick.new(@table, leaders_seat)
-      trick.play(players.count)
+      trick = Trick.new
+      trick.starting_seat = leaders_seat
+      trick.play(@table)
       @tricks_played += 1
 
-      leaders_seat = trick.winner.seat_number
-      trick.winner.take_trick(trick)
+      leaders_seat = trick.winner(@table).seat_number
+      trick.winner(@table).take_trick(trick)
       puts "Cards played this trick: #{trick.cards_played.join(', ')}"
       puts "This trick was worth #{trick.points} points."
-      puts "Trick Winner: #{trick.winner} with #{trick.winning_card}"
+      puts "Trick Winner: #{trick.winner(@table)} with #{trick.winning_card}"
       puts "----------------------"
     end
 

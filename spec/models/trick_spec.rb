@@ -1,9 +1,9 @@
 describe Trick do
   let(:table) { build(:table_with_3_players) }
-  let(:subject) { Trick.new(table, 1) }
 
   before do
     subject.cards_played = []
+    subject.starting_seat = 1
 
     table.players.each do |player|
       player.interactive = false
@@ -16,7 +16,7 @@ describe Trick do
         expect(player).to receive(:play_card)
       end
 
-      subject.play(table.players.count)
+      subject.play(table)
     end
   end
 
@@ -26,7 +26,7 @@ describe Trick do
         subject.cards_played << build(:card, value: '8', suit: 'S')
         subject.cards_played << build(:card, value: 'Q', suit: 'C')
         subject.cards_played << build(:card, value: 'J', suit: 'D')
-        expect(subject.winner).to eq(table.players[1])
+        expect(subject.winner(table)).to eq(table.players[1])
       end
     end
 
@@ -36,7 +36,7 @@ describe Trick do
         subject.cards_played << build(:card, value: 'K', suit: 'C')
         subject.cards_played << build(:card, value: '10', suit: 'H')
 
-        expect(subject.winner).to eq(table.players[0])
+        expect(subject.winner(table)).to eq(table.players[0])
       end
     end
   end
