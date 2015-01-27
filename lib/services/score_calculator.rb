@@ -79,7 +79,6 @@ class ScoreCalculator
     @picking_team_took_zero_tricks ||= (picking_team.inject(0) { |sum, player| sum + player.tricks_won.count } == 0)
   end
 
-
   def defending_team_took_zero_tricks?
     @defending_team_took_zero_tricks ||= (defending_team.inject(0) { |sum, player| sum + player.tricks_won.count } == 0)
   end
@@ -98,10 +97,6 @@ class ScoreCalculator
   def picking_teams_points
     @picking_teams_points ||= picking_team.inject(0) { |sum, player| sum + player.points }
   end
-
-  # def defending_teams_points
-  #   @defending_teams_points ||= defending_team.inject(0) { |sum, player| sum + player.points }
-  # end
 
   def defending_team
     @defending_team = @players.select { |player| !player.is_picker? && !player.is_partner? }
