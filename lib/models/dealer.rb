@@ -7,18 +7,20 @@ class Dealer
   end
 
   # deals the entire deck to the players
-  def deal(players)
-    num_players = players.count
+  def deal(table)
+    num_players = table.players.count
     deck.shuffle
     deck.deal_blind
 
     player_index = 0
+    seat = table.adjusted_seat_number(self.seat_number + 1) # start with the player to the left of the dealer
+
     while deck.cards.any?
-      deal_player(players[player_index % num_players])
-      player_index += 1
+      deal_player(table.player_at_seat(seat))
+      seat = table.adjusted_seat_number(seat + 1)
     end
 
-    players.each { |player| player.check_for_partner! } if players.count == 5
+    table.players.each { |player| player.check_for_partner! } if table.players.count == 5
   end
 
   def blind

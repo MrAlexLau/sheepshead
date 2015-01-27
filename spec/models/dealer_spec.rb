@@ -4,18 +4,19 @@ describe Dealer do
   describe '#deal' do
     [3, 4, 5].each do |num_players|
       context "when there are #{num_players} players" do
+        let(:table) { Table.new(num_players) }
         it 'should give each player the same number of cards' do
-          players = []
+          # players = []
 
-          num_players.times do
-            players << build(:player)
-          end
+          # num_players.times do
+          #   players << build(:player)
+          # end
 
           dealer = Dealer.new(1, num_players)
-          dealer.deal(players)
+          dealer.deal(table)
 
-          cards_per_player = players.first.hand.count
-          players.each do |player|
+          cards_per_player = table.players.first.hand.count
+          table.players.each do |player|
             expect(player.hand.count).to eq(cards_per_player)
           end
         end

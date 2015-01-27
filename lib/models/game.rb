@@ -7,7 +7,7 @@ class Game
   end
 
   def play
-    @dealer.deal(players)
+    @dealer.deal(@table)
     @picker = @dealer.blind_selection(@table)
 
     # start with the person to the left of the dealer
@@ -58,8 +58,6 @@ class Game
   def results
     @results
   end
-
-
 
   def display_game_results
     if self.leaster?
