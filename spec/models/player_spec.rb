@@ -123,4 +123,44 @@ describe Player do
       expect(subject.tricks_won.count).to eq(1)
     end
   end
+
+  describe "#reset!" do
+    it "clears the player's hand" do
+      subject = build(:player_with_hand)
+      subject.reset!
+      expect(subject.hand.count).to eq(0)
+    end
+
+    it "clears the player's tricks won" do
+      trick_1 = build(:trick, cards_played:
+        [build(:card, value: 'J', suit: 'H'), # 2 points
+        build(:card, value: 'Q', suit: 'C'), # 3 points
+        build(:card, value: 'J', suit: 'D')] # 2 points
+      )
+
+      subject.take_trick(trick_1)
+      subject.reset!
+      expect(subject.tricks_won.count).to eq(0)
+    end
+
+    it "clears the player's blind" do
+      blind = [ build(:card, value: 'J', suit: 'H'), build(:card, value: 'Q', suit: 'C') ]
+
+      subject.blind = blind
+      subject.reset!
+      expect(subject.blind.count).to eq(0)
+    end
+
+    it "clears the player's partner flag" do
+      subject.is_partner = true
+      subject.reset!
+      expect(subject.is_partner).to eq(false)
+    end
+
+    it "clears the player's picker flag" do
+      subject.is_picker = true
+      subject.reset!
+      expect(subject.is_picker).to eq(false)
+    end
+  end
 end
