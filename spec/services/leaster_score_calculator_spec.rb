@@ -222,7 +222,57 @@ describe LeasterScoreCalculator do
         end
       end
     end
+  end
 
+  describe '#winner?' do
+    let(:table) { Table.new(4) }
+    let(:subject) { LeasterScoreCalculator.new(table.players) }
+
+    context 'and there is one winner' do
+      before do
+        table.players = [
+          build(:leaster_loser),
+          build(:leaster_loser),
+          build(:leaster_winner),
+          build(:leaster_loser)
+        ]
+
+        subject = LeasterScoreCalculator.new(table.players)
+      end
+
+      it 'returns true for the winner' do
+        expect(subject.winner?(table.players[2])).to eq(true)
+      end
+
+      it 'returns false for each loser' do
+        expect(subject.winner?(table.players[0])).to eq(false)
+        expect(subject.winner?(table.players[1])).to eq(false)
+        expect(subject.winner?(table.players[3])).to eq(false)
+      end
+    end
+
+    context 'and there is a tie' do
+      before do
+        table.players = [
+          build(:leaster_winner),
+          build(:leaster_winner),
+          build(:leaster_loser),
+          build(:leaster_loser)
+        ]
+
+        subject = LeasterScoreCalculator.new(table.players)
+      end
+
+      it 'returns true for each winner' do
+        expect(subject.winner?(table.players[0])).to eq(true)
+        expect(subject.winner?(table.players[1])).to eq(true)
+      end
+
+      it 'returns false for each loser' do
+        expect(subject.winner?(table.players[2])).to eq(false)
+        expect(subject.winner?(table.players[3])).to eq(false)
+      end
+    end
   end
 
 end

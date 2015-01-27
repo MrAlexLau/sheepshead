@@ -8,7 +8,11 @@ class LeasterScoreCalculator
   def score_for(player)
     # If the player has the least amount of points, return the score per winner
     # If they don't, they lose. Their score is -1.
-    (player.points == minimum_points) ? score_per_winner : -1
+    self.winner?(player) ? score_per_winner : -1
+  end
+
+  def winner?(player)
+    player.points == minimum_points
   end
 
   private
