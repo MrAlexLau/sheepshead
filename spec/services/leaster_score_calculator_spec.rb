@@ -57,7 +57,7 @@ describe LeasterScoreCalculator do
         table.players = [
           build(:leaster_winner),
           build(:leaster_loser),
-          build(:leaster_no_trick)
+          build(:no_trick_player)
         ]
 
         subject = LeasterScoreCalculator.new(table.players)

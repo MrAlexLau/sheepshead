@@ -46,7 +46,15 @@ FactoryGirl.define do
       end
     end
 
-    factory :leaster_no_trick do
+    factory :single_trick_player do
+      after(:build) do |player|
+        trick = build(:trick)
+        trick.cards_played = [build(:card, value: '10', suit: 'D')]
+        player.tricks_won = [trick]
+      end
+    end
+
+    factory :no_trick_player do
       after(:build) do |player|
         player.tricks_won = []
       end
@@ -55,6 +63,38 @@ FactoryGirl.define do
 
   factory :trick do
     starting_seat 1
+
+    factory :thirty_point_trick do
+      after(:build) do |trick|
+        3.times do
+          trick.cards_played << build(:card, value: '10', suit: 'D')
+        end
+      end
+    end
+
+    factory :sixty_point_trick do
+      after(:build) do |trick|
+        6.times do
+          trick.cards_played << build(:card, value: '10', suit: 'D')
+        end
+      end
+    end
+
+    factory :ninety_point_trick do
+      after(:build) do |trick|
+        9.times do
+          trick.cards_played << build(:card, value: '10', suit: 'D')
+        end
+      end
+    end
+
+    factory :one_twenty_point_trick do
+      after(:build) do |trick|
+        12.times do
+          trick.cards_played << build(:card, value: '10', suit: 'D')
+        end
+      end
+    end
   end
 
   factory :table do
