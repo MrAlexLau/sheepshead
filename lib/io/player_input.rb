@@ -36,7 +36,7 @@ module PlayerInput
     card_number = get_valid_card_number(hand)
     card = hand[card_number - 1]
 
-    while !RuleMaster.valid_card?(hand, card, cards_played)
+    while !Player.valid_card?(hand, card, cards_played)
       puts "You must follow suit. #{leading_suit_pretty_name(cards_played)} was lead."
       puts "What card would you like to play?"
       card_number = get_valid_card_number(hand)

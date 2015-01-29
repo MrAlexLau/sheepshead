@@ -163,4 +163,35 @@ describe Player do
       expect(subject.is_picker).to eq(false)
     end
   end
+
+  describe '#valid_card?' do
+    context 'when no cards have been played' do
+      it 'returns true since the player leads the trick' do
+        expect(Player.valid_card?([], build(:card), [])).to eq(true)
+      end
+    end
+
+    context 'when a player can follow suit' do
+      context 'and the player follows suit' do
+        it 'returns true' do
+          expect(Player.valid_card?(
+            [build(:card, value: 'Q', suit: 'S')],
+            build(:card, value: 'Q', suit: 'S'),
+            [build(:card, value: 'J', suit: 'D')])).to eq(true)
+        end
+      end
+    end
+
+    context 'when a player can follow suit' do
+      context "and the player doesn't follow suit" do
+        it 'returns false' do
+          expect(Player.valid_card?(
+            [build(:card, value: 'Q', suit: 'S'), build(:card, value: '7', suit: 'H')],
+            build(:card, value: '7', suit: 'H'),
+            [build(:card, value: 'J', suit: 'D')])).to eq(false)
+        end
+      end
+    end
+  end
+
 end
