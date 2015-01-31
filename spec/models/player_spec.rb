@@ -27,12 +27,14 @@ describe Player do
 
   describe "#bury!" do
     context "after bury has been called" do
-      it "the player should still have the same number of cards in their hand" do
-        subject = build(:player_with_hand)
-        count_before = subject.hand.count
+      [2, 3, 4].each do |blind_count|
+        it "the player should have #{blind_count} less cards in their hand" do
+          subject = build(:player_with_hand)
+          count_before = subject.hand.count
 
-        subject.bury!(2)
-        expect(subject.hand.count).to eq(count_before)
+          subject.bury!(blind_count)
+          expect(subject.hand.count).to eq(count_before - blind_count)
+        end
       end
     end
   end

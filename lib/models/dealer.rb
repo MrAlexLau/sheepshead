@@ -39,7 +39,6 @@ class Dealer
     table.players.count.times do
       player = table.player_at_seat(seat)
 
-      craise seat if !player
       if player.wants_to_pick?
         player.is_picker = true
         player.hand = player.hand + blind

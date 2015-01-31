@@ -31,15 +31,22 @@ class Player
   end
 
   def wants_to_pick?
-    # TODO: add logic for AI picking
     if self.interactive?
       user_picked = user_picks?(self.hand)
       puts "User picked: #{user_picked}"
       return user_picked
     else
-      puts "#{self} passes"
-      return false
+      puts "#{self} picks? #{ai_picks?}"
+      return ai_picks?
     end
+  end
+
+  def ai_picks?
+    trump_count = self.hand.inject(0) { |sum, card| card.trump? ? sum + 1 : sum }
+    puts "trump_count: #{trump_count}"
+    puts "hand: #{self.hand.map {|card| card.to_s}}"
+
+    (trump_count > 3)
   end
 
   def bury!(blind_count)
@@ -47,8 +54,10 @@ class Player
     if self.interactive?
       self.hand = user_bury_prompt(self.hand, blind_count)
     else
-      # TODO: add logic for AI burying
-      self.hand = hand_before_burying
+      # AI naively buries the first n cards for now
+      blind_count.times do
+        self.hand.delete_at(0)
+      end
     end
 
     # the new blind is the cards buried
@@ -89,9 +98,9 @@ class Player
 
   def auto_pick_next_card(cards_played)
     # puts "Player's hand: #{self.hand.map { |card| card.value + card.suit }}"
-    hand.each do |card|
+    hand.each_with_index do |card, i|
       if Player.valid_card?(hand, card, cards_played)
-        hand.delete(card)
+        hand.delete_at(i)
         return card
       end
     end

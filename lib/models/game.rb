@@ -1,4 +1,6 @@
 class Game
+  attr_reader :results
+
   def initialize(options, table, dealer_seat)
     @options = options
     @dealer = Dealer.new(dealer_seat, @options.number_of_players)
@@ -53,10 +55,6 @@ class Game
       @results[player.name] = score_keeper.score_for(player)
     end
 
-    @results
-  end
-
-  def results
     @results
   end
 

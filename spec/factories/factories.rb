@@ -14,7 +14,10 @@ FactoryGirl.define do
     factory :player_with_hand do
       after(:build) do |player|
         player.hand = []
-        player.hand << build(:card)
+
+        5.times do
+          player.hand << build(:card)
+        end
       end
     end
 
