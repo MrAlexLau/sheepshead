@@ -1,5 +1,3 @@
-# This program simulates the game sheepshead
-
 $LOAD_PATH << '.'
 
 Dir["lib/*.rb"].each { |f| require f }
@@ -7,10 +5,9 @@ Dir["lib/io/*.rb"].each { |f| require f }
 Dir["lib/models/*.rb"].each { |f| require f }
 Dir["lib/services/*.rb"].each { |f| require f }
 
-
 require 'braise'
-require 'ostruct'
 
+Repete.hook
 
 options = Options.new
 
@@ -22,7 +19,6 @@ if !agrees?(user_response_uppercase)
   options.number_of_players = number_of_players_prompt
   options.points_to_win = points_to_win_prompt
 end
-
 
 table = Table.new(options.number_of_players)
 table.set_interactive_player
